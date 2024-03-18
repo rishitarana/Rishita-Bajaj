@@ -38,3 +38,39 @@ print(df)
  patientDetails fullName
 {'firstName': 'abc', 'lastName': 'xyz'}  abc xyz
 {'firstName': 'def', 'lastName': 'uvw'}  def uvw
+
+
+
+
+//3
+
+import json
+
+with open('DataEngineeringQ2.json', 'r') as file:
+    data = json.load(file)
+
+
+def is_valid_phone_number(phone_number):
+ 
+    if not (phone_number.startswith('+91') or phone_number.startswith('91')):
+        return False
+
+    phone_number = phone_number[2:]
+
+  
+    if len(phone_number) != 10 or not phone_number.isdigit():
+        return False
+
+
+    if int(phone_number) < 6000000000 or int(phone_number) > 9999999999:
+        return False
+
+    return True
+
+for record in data:
+    phone_number = record['phoneNumber']
+    record['isValidMobile'] = is_valid_phone_number(phone_number)
+    record['phoneNumberHash'] = hash(phone_number)
+
+with open('DataEngineeringQ2_updated.json', 'w') as file:
+    json.dump(data, file, indent=2)
