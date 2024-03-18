@@ -1,0 +1,40 @@
+//1
+import json
+import pandas as pd
+with open('data.json', 'r') as file:
+data = json.load(file)
+df = pd.DataFrame(data)
+df_selected = df[['appointmentId', 'phoneNumber', 'patientDetails.firstName', 'patientDetails.lastName', 'patientDetails.gender', 'patientDetails.birthDate', 'consultationData.medicines']]
+df_selected.columns = ['appointmentId', 'phoneNumber', 'firstName', 'lastName', 'gender', 'DOB', 'medicines']
+df_selected['gender'] = df_selected['gender'].apply(lambda x: 'male' if x == 'M' else ('female' if x == 'F' else 'others'))
+print(df_selected)
+
+
+//2
+import pandas as pd
+
+data = [
+    {
+        "patientDetails": {
+            "firstName": "abc",
+            "lastName": "xyz"
+        }
+    },
+    {
+        "patientDetails": {
+            "firstName": "def",
+            "lastName": "uvw"
+        }
+    }
+]
+
+df = pd.DataFrame(data)
+df['fullName'] = df['patientDetails'].apply(lambda x: f"{x['firstName']} {x['lastName']}", axis=1)
+
+print(df)
+
+
+
+ patientDetails fullName
+{'firstName': 'abc', 'lastName': 'xyz'}  abc xyz
+{'firstName': 'def', 'lastName': 'uvw'}  def uvw
